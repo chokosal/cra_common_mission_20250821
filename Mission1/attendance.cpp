@@ -8,9 +8,9 @@
 
 using namespace std;
 
-struct Node {
-	string w;
-	string wk;
+struct attandanceRecordEntry {
+	string name;
+	string day;
 };
 
 map<string, int> attandanceSheet;
@@ -26,7 +26,7 @@ int wed[USER_NUM];
 int weeken[USER_NUM];
 
 void readAttandanceData(void);
-void parseData(string name, string day);
+void parseData(const attandanceRecordEntry& record);
 int getAttandanceID(string name);
 void allocateID(string name);
 int getDayIndex(string day);
@@ -55,21 +55,22 @@ void readAttandanceData(void)
 	ifstream fin{ "attendance_weekday_500.txt" }; //500개 데이터 입력
 	for (int inputLine = 0; inputLine < INPUT_LINE_NUM; inputLine++) {
 		string name, day;
-		fin >> name >> day;
-		parseData(name, day);
+		attandanceRecordEntry attandanceRecord{"", ""};
+		fin >> attandanceRecord.name >> attandanceRecord.day;
+		parseData(attandanceRecord);
 	}
 }
 
-void parseData(string name, string day) {
+void parseData(const attandanceRecordEntry& record)
+{
 
-	int attandanceID = getAttandanceID(name);
+	int attandanceID = getAttandanceID(record.name);
+	int dayIndex = getDayIndex(record.day);
 
 	//디버깅용
-	if (name == "Daisy") {
+	if (record.name == "Daisy") {
 		int debug = 1;
 	}
-
-	int dayIndex = getDayIndex(day);
 
 	updateAttandanceData(attandanceID, dayIndex);
 }
