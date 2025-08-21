@@ -30,6 +30,7 @@ void parseData(string name, string day);
 int getAttandanceID(string name);
 void allocateID(string name);
 int getDayIndex(string day);
+void updateAttandanceData(int attandanceID, int dayIndex);
 
 void addExtraPoint(void);
 void addPointForWed(void);
@@ -59,12 +60,6 @@ void readAttandanceData(void)
 	}
 }
 
-int getAttandanceID(string name)
-{
-	allocateID(name);
-	return attandanceSheet[name];
-}
-
 void parseData(string name, string day) {
 
 	int attandanceID = getAttandanceID(name);
@@ -74,16 +69,15 @@ void parseData(string name, string day) {
 		int debug = 1;
 	}
 
-	int add_point = POINT_NORMAL;
 	int dayIndex = getDayIndex(day);
-	add_point = POINT_PER_DAY[dayIndex];
-	
-	if (dayIndex == WEDNESDAY_INDEX) wed[attandanceID]++;
-	else if (day == SATURDAY || day == SUNDAY) weeken[attandanceID]++;
 
-	//사용자ID별 요일 데이터에 1씩 증가
-	attandanceRecord[attandanceID][dayIndex]++;
-	attandancePoint[attandanceID] += add_point;
+	updateAttandanceData(attandanceID, dayIndex);
+}
+
+int getAttandanceID(string name)
+{
+	allocateID(name);
+	return attandanceSheet[name];
 }
 
 void allocateID(string name)
@@ -108,6 +102,20 @@ int getDayIndex(string day)
 	else if (day == WEDNESDAY) return WEDNESDAY_INDEX;
 	else if (day == SATURDAY) return SATURDAY_INDEX; 
 	return SUNDAY_INDEX;
+}
+
+void updateAttandanceData(int attandanceID, int dayIndex)
+{
+	int add_point = POINT_NORMAL;
+
+	add_point = POINT_PER_DAY[dayIndex];
+
+	if (dayIndex == WEDNESDAY_INDEX) wed[attandanceID]++;
+	else if (dayIndex == SATURDAY_INDEX || dayIndex == SUNDAY_INDEX) weeken[attandanceID]++;
+
+	//사용자ID별 요일 데이터에 1씩 증가
+	attandanceRecord[attandanceID][dayIndex]++;
+	attandancePoint[attandanceID] += add_point;
 }
 
 void addExtraPoint(void)
