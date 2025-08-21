@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>member.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+    <body onload="prettyPrint()">
+        <h4></h4>
+        <pre class="prettyprint lang-cpp linenums">
+#include "iostream"
+#include "member.h"
+
+using namespace std;
+
+void MemberSheet::addMemberRecord(attandanceRecordEntry record)
+<span style = "background-color:#fdd">{
+	int id = allocateID(record.name);
+	updatePerInputRecord(id, record.day);
+}</span>
+
+void MemberSheet::wrapUpResult(void)
+<span style = "background-color:#dfd">{
+	addExtraPoint();
+	giveGrade();
+	printAttendanceResult();
+}</span>
+
+int MemberSheet::allocateID(string name)
+<span style = "background-color:#fdd">{
+	if (userNameAndIdMap.count(name) == 0) {
+		userNameAndIdMap.insert({ name, memberCount++ });
+		memberInfo[userNameAndIdMap[name]].name = name;</span>
+	}
+<span style = "background-color:#fdd">	return userNameAndIdMap[name];
+}</span>
+
+void MemberSheet::updatePerInputRecord(int id, string day)
+<span style = "background-color:#fdd">{
+	int dayIndex = getDayIndex(day);
+	updateAttandanceData(id, dayIndex);
+}</span>
+
+int MemberSheet::getDayIndex(string day)
+<span style = "background-color:#fdd">{
+	if (day == MONDAY)  return MONDAY_INDEX;
+	else if (day == TUESDAY) return TUESDAY_INDEX;
+	else if (day == THURSDAY) return THURSDAY_INDEX;
+	else if (day == FRIDAY) return FRIDAY_INDEX;
+	else if (day == WEDNESDAY) return WEDNESDAY_INDEX;
+	else if (day == SATURDAY) return SATURDAY_INDEX;
+	return SUNDAY_INDEX;
+}</span>
+
+void MemberSheet::updateAttandanceData(int attandanceID, int dayIndex)
+<span style = "background-color:#fdd">{
+	int add_point = pointQuery.getPointPerDay(dayIndex);</span>
+
+	//»ç¿ëÀÚIDº° ¿äÀÏ µ¥ÀÌÅÍ¿¡ 1¾¿ Áõ°¡
+<span style = "background-color:#fdd">	memberInfo[attandanceID].attendanceCountPerDay[dayIndex]++;
+	memberInfo[attandanceID].point += add_point;
+}</span>
+
+void MemberSheet::addExtraPoint(void)
+<span style = "background-color:#dfd">{
+	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
+	{
+<span style = "background-color:#fdd">		if (memberInfo[memberIndex].attendanceCountPerDay[WEDNESDAY_INDEX] &gt;= DAY_NUM_FOR_WED)</span>
+		{
+<span style = "background-color:#fdd">			memberInfo[memberIndex].point += pointQuery.getExtraPoint(WEDNESDAY_INDEX);</span>
+		}
+<span style = "background-color:#fdd">	}</span>
+
+<span style = "background-color:#dfd">	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
+	{
+		if (memberInfo[memberIndex].attendanceCountPerDay[SATURDAY_INDEX]
+<span style = "background-color:#fdd">			+ memberInfo[memberIndex].attendanceCountPerDay[SUNDAY_INDEX] &gt;= DAY_NUM_FOR_WEEKEND)</span>
+		{
+<span style = "background-color:#fdd">			memberInfo[memberIndex].point += pointQuery.getExtraPoint(SUNDAY_INDEX);</span>
+		}
+<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#dfd">}</span>
+
+void MemberSheet::giveGrade(void)
+<span style = "background-color:#dfd">{
+	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
+	{
+<span style = "background-color:#fdd">		if (memberInfo[memberIndex].point &gt;= POINT_FOR_GOLD) memberInfo[memberIndex].grade = GRADE_GOLD_VALUE;
+		else if (memberInfo[memberIndex].point &gt;= POINT_FOR_SILVER) memberInfo[memberIndex].grade = GRADE_SILVER_VALUE;
+		else memberInfo[memberIndex].grade = GRADE_NORMAL_VALUE;
+	}</span>
+<span style = "background-color:#dfd">}</span>
+
+void MemberSheet::printAttendanceResult(void)
+<span style = "background-color:#dfd">{
+	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
+	{
+<span style = "background-color:#fdd">		cout &lt;&lt; "NAME : " &lt;&lt; memberInfo[memberIndex].name &lt;&lt; ", ";
+		cout &lt;&lt; "POINT : " &lt;&lt; memberInfo[memberIndex].point &lt;&lt; ", ";
+		cout &lt;&lt; "GRADE : " &lt;&lt; getGradeString(memberInfo[memberIndex].grade) &lt;&lt; "\n";
+	}</span>
+
+<span style = "background-color:#dfd">	printRemovedPlayers();
+}</span>
+
+void MemberSheet::printRemovedPlayers()
+<span style = "background-color:#dfd">{
+	std::cout &lt;&lt; "\n";
+	std::cout &lt;&lt; "Removed player\n";
+	std::cout &lt;&lt; "==============\n";
+	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
+	{
+<span style = "background-color:#fdd">		if (IsRemovalCondition(memberIndex)) {
+			std::cout &lt;&lt; memberInfo[memberIndex].name &lt;&lt; "\n";</span>
+		}
+<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#dfd">}</span>
+
+bool MemberSheet::IsRemovalCondition(int attandanceID)
+<span style = "background-color:#fdd">{
+	int countHardTrainingDay = getHardTraningDayJoinCount(attandanceID);</span>
+
+<span style = "background-color:#fdd">	if (memberInfo[attandanceID].grade != GRADE_NORMAL_VALUE) return false;
+	else if (0 == countHardTrainingDay) return true;
+	return false;
+}</span>
+
+string MemberSheet::getGradeString(int grade)
+<span style = "background-color:#fdd">{
+	if (grade == GRADE_GOLD_VALUE) return GRADE_GOLD_STRING;
+	else if (grade == GRADE_SILVER_VALUE) return GRADE_SILVER_STRING;
+	return GRADE_NORMAL_STRING;
+}</span>
+
+int MemberSheet::getHardTraningDayJoinCount(int attandanceID)
+<span style = "background-color:#fdd">{
+	int retCount = memberInfo[attandanceID].attendanceCountPerDay[WEDNESDAY_INDEX];
+	retCount += memberInfo[attandanceID].attendanceCountPerDay[SATURDAY_INDEX];
+	retCount += memberInfo[attandanceID].attendanceCountPerDay[SUNDAY_INDEX];</span>
+
+<span style = "background-color:#fdd">	return retCount;
+}</span></pre>
+        <hr />
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th align="center">
+                        <small>Generated by</small>
+                        <a href="https://github.com/OpenCppCoverage/OpenCppCoverage/releases">
+                            <strong>OpenCppCoverage (Version: 0.9.9.0)</strong>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </body>
+</html>

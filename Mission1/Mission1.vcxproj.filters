@@ -13,9 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="테스트 파일">
+      <UniqueIdentifier>{6699d8c9-1609-4586-9b61-8464812ea4c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="attendance.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="member.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>테스트 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="data_parser.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="data_processor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="point_provider.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -23,10 +47,34 @@
     <Text Include="attendance_weekday_500.txt">
       <Filter>리소스 파일</Filter>
     </Text>
+    <Text Include="TestInputRecord.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="member.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="data_parser.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="data_structure.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="data_processor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="point_provider.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h">
+      <Filter>테스트 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
