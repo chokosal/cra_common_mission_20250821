@@ -1,6 +1,6 @@
 #pragma once
 #define USER_NUM 100
-#define DAY_NUM 100
+#define DAY_NUM 7
 #define INPUT_LINE_NUM 500
 
 #define GRADE_GOLD_STRING "GOLD"
