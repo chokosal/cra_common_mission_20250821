@@ -5,8 +5,8 @@ void DataProcessor::HandleAttendanceRecords(vector<attandanceRecordEntry>& attan
 {
 	for (attandanceRecordEntry record : attandanceRecords)
 	{
-		memberSheet.addMemberRecord(record);
+		memberSheet->addMemberRecord(record);
 	}
 	
-	memberSheet.wrapUpResult();
+	memberSheet->wrapUpResult();
 }

@@ -10,8 +10,11 @@
         <h4></h4>
         <pre class="prettyprint lang-cpp linenums">
 #include "gmock/gmock.h"
+#include "constants.h"
+#include "test.h"
 #include "data_parser.h"
-#include "data_processor.h"
+//#include "data_processor.h"
+//#include "point_provider.h"
 
 using namespace testing;
 
@@ -20,7 +23,7 @@ using namespace testing;
 	DataParser parser;
 	vector&lt;attandanceRecordEntry&gt; attandanceRecords{ 0 };</span>
 
-<span style = "background-color:#dfd">	string fileName = "C:\Users\User\Desktop\CRA±³À°ÀÚ·á\Mission1_d2_d5\Mission1\TestInputRecord.txt";
+<span style = "background-color:#dfd">	string fileName = "TestInputRecord.txt";
 	parser.addRecords(fileName, attandanceRecords);</span>
 
 <span style = "background-color:#dfd">	EXPECT_EQ(1, attandanceRecords.size());
@@ -31,26 +34,64 @@ using namespace testing;
 	DataParser parser;
 	vector&lt;attandanceRecordEntry&gt; attandanceRecords{ 0 };</span>
 
-	// fileName = "attendance_weekday_500.txt";
-<span style = "background-color:#dfd">	string fileName = "C:\Users\User\Desktop\CRA±³À°ÀÚ·á\Mission1_d2_d5\Mission1\attendance_weekday_500.txt";</span>
-
-<span style = "background-color:#dfd">	parser.addRecords(fileName, attandanceRecords);</span>
+<span style = "background-color:#dfd">	string fileName = "attendance_weekday_500.txt";
+	parser.addRecords(fileName, attandanceRecords);</span>
 
 <span style = "background-color:#dfd">	EXPECT_EQ(500, attandanceRecords.size());
 }</span>
 
-<span style = "background-color:#dfd">TEST(Processor, HandleRecords)
+//TEST(Processor, HandleRecords)
+//{
+//	DataParser parser;
+//	vector&lt;attandanceRecordEntry&gt; attandanceRecords{ 0 };
+//
+//	string fileName = "attendance_weekday_500.txt";
+//	parser.addRecords(fileName, attandanceRecords);
+//
+//	MockMemberSheet memberSheet;
+//	EXPECT_CALL(memberSheet, wrapUpResult())
+//		.Times(500);
+//
+//	DataProcessor processor{ &amp;memberSheet };
+//	processor.HandleAttendanceRecords(attandanceRecords);
+//}
+
+<span style = "background-color:#dfd">TEST(PointProviderTest, getDayPoint)
 {
-	DataParser parser;
-	vector&lt;attandanceRecordEntry&gt; attandanceRecords{ 0 };</span>
+	PointProvider pointQuery;
+	int point = pointQuery.getPointPerDay(MONDAY_INDEX);
+	EXPECT_EQ(POINT_NORMAL, point);</span>
 
-<span style = "background-color:#dfd">	string fileName = "C:\Users\User\Desktop\CRA±³À°ÀÚ·á\Mission1_d2_d5\Mission1\attendance_weekday_500.txt";
-	parser.addRecords(fileName, attandanceRecords);</span>
+<span style = "background-color:#dfd">	point = pointQuery.getPointPerDay(TUESDAY_INDEX);
+	EXPECT_EQ(POINT_NORMAL, point);</span>
 
-<span style = "background-color:#dfd">	DataProcessor processor;
-	processor.HandleAttendanceRecords(attandanceRecords);</span>
+<span style = "background-color:#dfd">	point = pointQuery.getPointPerDay(WEDNESDAY_INDEX);
+	EXPECT_EQ(POINT_WED, point);</span>
 
-<span style = "background-color:#dfd">	EXPECT_EQ(500, attandanceRecords.size());
+<span style = "background-color:#dfd">	point = pointQuery.getPointPerDay(THURSDAY_INDEX);
+	EXPECT_EQ(POINT_NORMAL, point);</span>
+
+<span style = "background-color:#dfd">	point = pointQuery.getPointPerDay(FRIDAY_INDEX);
+	EXPECT_EQ(POINT_NORMAL, point);</span>
+
+<span style = "background-color:#dfd">	point = pointQuery.getPointPerDay(SATURDAY_INDEX);
+	EXPECT_EQ(POINT_WEEKEND, point);</span>
+
+<span style = "background-color:#dfd">	point = pointQuery.getPointPerDay(SUNDAY_INDEX);
+	EXPECT_EQ(POINT_WEEKEND, point);
+}</span>
+
+<span style = "background-color:#dfd">TEST(PointProviderTest, getExtraPoint)
+{
+	PointProvider pointQuery;
+	int point = pointQuery.getExtraPoint(WEDNESDAY_INDEX);
+	EXPECT_EQ(ADDITIONAL_POINT_WED, point);</span>
+
+<span style = "background-color:#dfd">	point = pointQuery.getExtraPoint(SATURDAY_INDEX);
+	EXPECT_EQ(ADDITIONAL_POINT_WEEKEND, point);</span>
+
+<span style = "background-color:#dfd">	point = pointQuery.getExtraPoint(MONDAY_INDEX);
+	EXPECT_EQ(0, point);
 }</span></pre>
         <hr />
         <table width="100%">

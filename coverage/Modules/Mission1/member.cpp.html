@@ -21,7 +21,7 @@ void MemberSheet::addMemberRecord(attandanceRecordEntry record)
 }</span>
 
 void MemberSheet::wrapUpResult(void)
-<span style = "background-color:#dfd">{
+<span style = "background-color:#fdd">{
 	addExtraPoint();
 	giveGrade();
 	printAttendanceResult();
@@ -63,7 +63,7 @@ void MemberSheet::updateAttandanceData(int attandanceID, int dayIndex)
 }</span>
 
 void MemberSheet::addExtraPoint(void)
-<span style = "background-color:#dfd">{
+<span style = "background-color:#fdd">{
 	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
 	{
 <span style = "background-color:#fdd">		if (memberInfo[memberIndex].attendanceCountPerDay[WEDNESDAY_INDEX] &gt;= DAY_NUM_FOR_WED)</span>
@@ -72,28 +72,28 @@ void MemberSheet::addExtraPoint(void)
 		}
 <span style = "background-color:#fdd">	}</span>
 
-<span style = "background-color:#dfd">	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
+<span style = "background-color:#fdd">	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
 	{
 		if (memberInfo[memberIndex].attendanceCountPerDay[SATURDAY_INDEX]
 <span style = "background-color:#fdd">			+ memberInfo[memberIndex].attendanceCountPerDay[SUNDAY_INDEX] &gt;= DAY_NUM_FOR_WEEKEND)</span>
 		{
 <span style = "background-color:#fdd">			memberInfo[memberIndex].point += pointQuery.getExtraPoint(SUNDAY_INDEX);</span>
 		}
-<span style = "background-color:#fdd">	}</span>
-<span style = "background-color:#dfd">}</span>
+<span style = "background-color:#fdd">	}
+}</span>
 
 void MemberSheet::giveGrade(void)
-<span style = "background-color:#dfd">{
+<span style = "background-color:#fdd">{
 	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
 	{
 <span style = "background-color:#fdd">		if (memberInfo[memberIndex].point &gt;= POINT_FOR_GOLD) memberInfo[memberIndex].grade = GRADE_GOLD_VALUE;
 		else if (memberInfo[memberIndex].point &gt;= POINT_FOR_SILVER) memberInfo[memberIndex].grade = GRADE_SILVER_VALUE;
 		else memberInfo[memberIndex].grade = GRADE_NORMAL_VALUE;
-	}</span>
-<span style = "background-color:#dfd">}</span>
+	}
+}</span>
 
 void MemberSheet::printAttendanceResult(void)
-<span style = "background-color:#dfd">{
+<span style = "background-color:#fdd">{
 	for (int memberIndex = 0; memberIndex &lt; memberCount; memberIndex++)</span>
 	{
 <span style = "background-color:#fdd">		cout &lt;&lt; "NAME : " &lt;&lt; memberInfo[memberIndex].name &lt;&lt; ", ";
@@ -101,11 +101,11 @@ void MemberSheet::printAttendanceResult(void)
 		cout &lt;&lt; "GRADE : " &lt;&lt; getGradeString(memberInfo[memberIndex].grade) &lt;&lt; "\n";
 	}</span>
 
-<span style = "background-color:#dfd">	printRemovedPlayers();
+<span style = "background-color:#fdd">	printRemovedPlayers();
 }</span>
 
 void MemberSheet::printRemovedPlayers()
-<span style = "background-color:#dfd">{
+<span style = "background-color:#fdd">{
 	std::cout &lt;&lt; "\n";
 	std::cout &lt;&lt; "Removed player\n";
 	std::cout &lt;&lt; "==============\n";
@@ -114,8 +114,8 @@ void MemberSheet::printRemovedPlayers()
 <span style = "background-color:#fdd">		if (IsRemovalCondition(memberIndex)) {
 			std::cout &lt;&lt; memberInfo[memberIndex].name &lt;&lt; "\n";</span>
 		}
-<span style = "background-color:#fdd">	}</span>
-<span style = "background-color:#dfd">}</span>
+<span style = "background-color:#fdd">	}
+}</span>
 
 bool MemberSheet::IsRemovalCondition(int attandanceID)
 <span style = "background-color:#fdd">{

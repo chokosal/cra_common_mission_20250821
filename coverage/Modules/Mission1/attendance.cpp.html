@@ -35,7 +35,8 @@ int main() {
 	vector&lt;attandanceRecordEntry&gt; attandanceRecords{ 0 };
 	parser.addRecords("attendance_weekday_500.txt", attandanceRecords);
 	
-	DataProcessor processor;
+	MemberSheet memberSheet;
+	DataProcessor processor{ &amp;memberSheet };
 	processor.HandleAttendanceRecords(attandanceRecords);
 }
 #endif</pre>

@@ -1,6 +1,7 @@
 #include "gmock/gmock.h"
+#include "constants.h"
+#include "test.h"
 #include "data_parser.h"
-#include "data_processor.h"
 
 using namespace testing;
 
@@ -26,16 +27,41 @@ TEST(Parser, Read500Record)
 	EXPECT_EQ(500, attandanceRecords.size());
 }
 
-TEST(Processor, HandleRecords)
+
+TEST(PointProviderTest, getDayPoint)
 {
-	DataParser parser;
-	vector<attandanceRecordEntry> attandanceRecords{ 0 };
+	PointProvider pointQuery;
+	int point = pointQuery.getPointPerDay(MONDAY_INDEX);
+	EXPECT_EQ(POINT_NORMAL, point);
 
-	string fileName = "attendance_weekday_500.txt";
-	parser.addRecords(fileName, attandanceRecords);
+	point = pointQuery.getPointPerDay(TUESDAY_INDEX);
+	EXPECT_EQ(POINT_NORMAL, point);
 
-	DataProcessor processor;
-	processor.HandleAttendanceRecords(attandanceRecords);
+	point = pointQuery.getPointPerDay(WEDNESDAY_INDEX);
+	EXPECT_EQ(POINT_WED, point);
 
-	EXPECT_EQ(500, attandanceRecords.size());
+	point = pointQuery.getPointPerDay(THURSDAY_INDEX);
+	EXPECT_EQ(POINT_NORMAL, point);
+
+	point = pointQuery.getPointPerDay(FRIDAY_INDEX);
+	EXPECT_EQ(POINT_NORMAL, point);
+
+	point = pointQuery.getPointPerDay(SATURDAY_INDEX);
+	EXPECT_EQ(POINT_WEEKEND, point);
+
+	point = pointQuery.getPointPerDay(SUNDAY_INDEX);
+	EXPECT_EQ(POINT_WEEKEND, point);
+}
+
+TEST(PointProviderTest, getExtraPoint)
+{
+	PointProvider pointQuery;
+	int point = pointQuery.getExtraPoint(WEDNESDAY_INDEX);
+	EXPECT_EQ(ADDITIONAL_POINT_WED, point);
+
+	point = pointQuery.getExtraPoint(SATURDAY_INDEX);
+	EXPECT_EQ(ADDITIONAL_POINT_WEEKEND, point);
+
+	point = pointQuery.getExtraPoint(MONDAY_INDEX);
+	EXPECT_EQ(0, point);
 }

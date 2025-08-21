@@ -19,11 +19,16 @@ void DataParser::addRecords(string fileName, vector&lt;attandanceRecordEntry&gt;
 
 <span style = "background-color:#dfd">	for (int inputLine = 0; inputLine &lt; INPUT_LINE_NUM; inputLine++) {
 		attandanceRecordEntry recordEntry{ "", "" };
-		fin &gt;&gt; recordEntry.name &gt;&gt; recordEntry.day;
-		if (recordEntry.name == "" || recordEntry.day == "") return;</span>
+		fin &gt;&gt; recordEntry.name &gt;&gt; recordEntry.day;</span>
+
+<span style = "background-color:#dfd">		if (recordEntry.name == "" || recordEntry.day == "") </span>
+		{
+<span style = "background-color:#dfd">			break;</span>
+		}
+			
 <span style = "background-color:#fdd">		attandanceRecords.push_back(recordEntry);
-	}
-}</span></pre>
+	}</span>
+<span style = "background-color:#dfd">}</span></pre>
         <hr />
         <table width="100%">
             <thead>

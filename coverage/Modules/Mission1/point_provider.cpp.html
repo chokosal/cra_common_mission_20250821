@@ -12,12 +12,12 @@
 #include "point_provider.h"
 
 int PointProvider::getPointPerDay(int dayIndex)
-<span style = "background-color:#fdd">{
+<span style = "background-color:#dfd">{
 	return POINT_PER_DAY[dayIndex];
 }</span>
 
 int PointProvider::getExtraPoint(int dayIndex)
-<span style = "background-color:#fdd">{
+<span style = "background-color:#dfd">{
 	if (dayIndex == WEDNESDAY_INDEX) return ADDITIONAL_POINT_WED;
 	else if (dayIndex == SATURDAY_INDEX || dayIndex == SUNDAY_INDEX) return ADDITIONAL_POINT_WEEKEND;
 	return 0;

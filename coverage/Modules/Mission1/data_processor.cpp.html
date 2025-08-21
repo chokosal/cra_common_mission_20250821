@@ -13,14 +13,13 @@
 #include &lt;iostream&gt;
 
 void DataProcessor::HandleAttendanceRecords(vector&lt;attandanceRecordEntry&gt;&amp; attandanceRecords)
-<span style = "background-color:#dfd">{
+<span style = "background-color:#fdd">{
 	for (attandanceRecordEntry record : attandanceRecords)</span>
 	{
-<span style = "background-color:#fdd">		memberSheet.addMemberRecord(record);</span>
-		//std::cout &lt;&lt; "**\n";
-<span style = "background-color:#fdd">	}</span>
+<span style = "background-color:#fdd">		memberSheet-&gt;addMemberRecord(record);
+	}</span>
 	
-<span style = "background-color:#dfd">	memberSheet.wrapUpResult();
+<span style = "background-color:#fdd">	memberSheet-&gt;wrapUpResult();
 }</span></pre>
         <hr />
         <table width="100%">

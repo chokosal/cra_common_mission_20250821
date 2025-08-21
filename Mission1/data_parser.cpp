@@ -9,7 +9,12 @@ void DataParser::addRecords(string fileName, vector<attandanceRecordEntry>& atta
 	for (int inputLine = 0; inputLine < INPUT_LINE_NUM; inputLine++) {
 		attandanceRecordEntry recordEntry{ "", "" };
 		fin >> recordEntry.name >> recordEntry.day;
-		if (recordEntry.name == "" || recordEntry.day == "") return;
+
+		if (recordEntry.name == "" || recordEntry.day == "") 
+		{
+			break;
+		}
+			
 		attandanceRecords.push_back(recordEntry);
 	}
 }
